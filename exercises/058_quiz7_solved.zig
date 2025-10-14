@@ -257,7 +257,7 @@ const HermitsNotebook = struct {
             // const optionalPointerEntry: ?*NotebookEntry = &entry.*; // casting to optional pointer type
             // Pointers cannot be null. If you want a null pointer, use the optional
             // https://ziglang.org/documentation/master/#Optional-Pointers
-            if (place == entry.*.?.place) return &entry.*.?;
+            if (place == entry.*.?.place) return &entry.* orelse unreachable;
             // Try to make your answer this long:__________;
         }
         return null;
