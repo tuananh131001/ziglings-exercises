@@ -255,9 +255,12 @@ const HermitsNotebook = struct {
             // dereference and optional value "unwrapping" look
             // together. Remember that you return the address with the
             // "&" operator.
-            const temp: ?NotebookEntry = entry.*;
-            const nonTempVal: ?NotebookEntry = temp.?;
-            if (place == nonTempVal.?.place) return entry;
+            const temp: ?NotebookEntry = entry.*; // destructure
+            const nonTempVal: ?NotebookEntry = temp.?; // 
+            // const optionalPointerEntry: ?*NotebookEntry = &entry.*; // casting to optional pointer type
+            // Pointers cannot be null. If you want a null pointer, use the optional
+            // https://ziglang.org/documentation/master/#Optional-Pointers
+            if (place == nonTempVal.?.place) return null;
             // Try to make your answer this long:__________;
         }
         return null;
