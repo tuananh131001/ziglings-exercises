@@ -192,8 +192,8 @@ const TripItem = union(enum) {
             // Oops! The hermit forgot how to capture the union values
             // in a switch statement. Please capture each value as
             // 'p' so the print statements work!
-            .place => print("{s}", .{p.name}),
-            .path => print("--{}->", .{p.dist}),
+            .place => print("{s}", .{self.name}),
+            .path => print("--{}->", .{self.dist}),
         }
     }
 };
@@ -255,7 +255,9 @@ const HermitsNotebook = struct {
             // dereference and optional value "unwrapping" look
             // together. Remember that you return the address with the
             // "&" operator.
-            if (place == entry.*.?.place) return entry;
+            const temp: ?NotebookEntry = entry.*;
+            const nonTempVal: ?NotebookEntry = temp.?;
+            if (place == nonTempVal.?.place) return entry;
             // Try to make your answer this long:__________;
         }
         return null;
