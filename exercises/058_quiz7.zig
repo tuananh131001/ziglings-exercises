@@ -192,8 +192,8 @@ const TripItem = union(enum) {
             // Oops! The hermit forgot how to capture the union values
             // in a switch statement. Please capture each value as
             // 'p' so the print statements work!
-            .place => print("{s}", .{self.place.name}),
-            .path => print("--{}->", .{self.path.from}),
+            .place => |place| print("{s}", .{place.name}),
+            .path => |path| print("--{}->", .{path.dist}),
         }
     }
 };
@@ -254,13 +254,10 @@ const HermitsNotebook = struct {
             // if statement provides some clues about how the
             // dereference and optional value "unwrapping" look
             // together. Remember that you return the address with the
-            // "&" operator.
-            const temp: ?NotebookEntry = entry.*; // destructure
-            const nonTempVal: ?NotebookEntry = temp.?; //
             // const optionalPointerEntry: ?*NotebookEntry = &entry.*; // casting to optional pointer type
             // Pointers cannot be null. If you want a null pointer, use the optional
             // https://ziglang.org/documentation/master/#Optional-Pointers
-            if (place == nonTempVal.?.place) return null;
+            if (place == entry.*.?.place) return &entry.*.?;
             // Try to make your answer this long:__________;
         }
         return null;
