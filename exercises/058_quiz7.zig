@@ -192,8 +192,8 @@ const TripItem = union(enum) {
             // Oops! The hermit forgot how to capture the union values
             // in a switch statement. Please capture each value as
             // 'p' so the print statements work!
-            .place => print("{s}", .{self.name}),
-            .path => print("--{}->", .{self.dist}),
+            .place => print("{s}", .{self.place.name}),
+            .path => print("--{}->", .{self.path.from}),
         }
     }
 };
@@ -256,7 +256,7 @@ const HermitsNotebook = struct {
             // together. Remember that you return the address with the
             // "&" operator.
             const temp: ?NotebookEntry = entry.*; // destructure
-            const nonTempVal: ?NotebookEntry = temp.?; // 
+            const nonTempVal: ?NotebookEntry = temp.?; //
             // const optionalPointerEntry: ?*NotebookEntry = &entry.*; // casting to optional pointer type
             // Pointers cannot be null. If you want a null pointer, use the optional
             // https://ziglang.org/documentation/master/#Optional-Pointers
@@ -314,7 +314,7 @@ const HermitsNotebook = struct {
     //
     // Looks like the hermit forgot something in the return value of
     // this function. What could that be?
-    fn getTripTo(self: *HermitsNotebook, trip: []?TripItem, dest: *Place) void {
+    fn getTripTo(self: *HermitsNotebook, trip: []?TripItem, dest: *Place) TripError!void { // ! stand for union
         // We start at the destination entry.
         const destination_entry = self.getEntry(dest);
 
